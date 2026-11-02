@@ -171,7 +171,7 @@ nav.tabs button.on{background:#ffffff14;color:var(--saffron)}
 
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const F=n=>Math.round(n).toLocaleString('fr-FR').replace(/ /g,' ')+' F';
+const F=n=>Math.round(n).toLocaleString('fr-FR').replace(/ /g,' ')+' €';
 const COLS=['#d4683a','#2f8a57','#6c5ce7','#c58b0e','#1f7a8c','#b0437a','#46524c','#8c5a2b','#3b6fd8','#a04040','#2b7a6a','#7a5cc0'];
 const ini=n=>n.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
 const av=m=>`<span class="av" style="background:${m.c}">${ini(m.nom)}</span>`;
@@ -182,12 +182,12 @@ function demo(){
   const membres=noms.map((nom,i)=>({id:i+1,nom,tel:'6'+(90000000+i*1234567).toString().slice(0,8),c:COLS[i]}));
   const ordre=[3,7,1,9,2,5,10,4,6,8];
   const d=new Date();const base=new Date(d.getFullYear(),d.getMonth()-4,6);
-  const historique=ordre.slice(0,4).map((id,i)=>({tour:i+1,id,montant:250000,date:new Date(base.getFullYear(),base.getMonth()+i,base.getDate()).toISOString(),retards:i===2?1:0}));
+  const historique=ordre.slice(0,4).map((id,i)=>({tour:i+1,id,montant:500,date:new Date(base.getFullYear(),base.getMonth()+i,base.getDate()).toISOString(),retards:i===2?1:0}));
   const next=new Date(d.getTime()+3*864e5+4*36e5);
-  return {v:1,nom:'Njangi des Mamans de Biyem-Assi',montant:25000,penalite:2000,freq:'Mensuelle',seance:next.toISOString(),membres,ordre,tour:4,payes:{1:1,3:1,4:1,6:1,8:1,9:1,10:1},retards:{},historique};
+  return {v:2,nom:'Njangi des Mamans de Biyem-Assi',montant:50,penalite:5,freq:'Mensuelle',seance:next.toISOString(),membres,ordre,tour:4,payes:{1:1,3:1,4:1,6:1,8:1,9:1,10:1},retards:{},historique};
 }
 let S;try{S=JSON.parse(localStorage.getItem('njangi'))}catch{}
-if(!S||S.v!==1)S=demo();
+if(!S||S.v!==2)S=demo();
 const save=()=>{try{localStorage.setItem('njangi',JSON.stringify(S))}catch{}};
 const mem=id=>S.membres.find(m=>m.id===id);
 const benef=()=>mem(S.ordre[S.tour]);
@@ -279,7 +279,7 @@ function openSheet(k){
       $('#rcopy').onclick=()=>{navigator.clipboard?.writeText($('#rmsg').value);toast('Message copié')}}
     $('#sheet').classList.add('on');return}
   if(k==='add')h+=`<h4>Nouveau membre</h4><p>Il rejoindra la fin de l'ordre de passage.</p><form id="af"><label class="fld">Nom complet<input id="an" required placeholder="Ex. Agnès Mballa"></label><label class="fld">Téléphone<input id="at" inputmode="numeric" placeholder="6XX XX XX XX"></label><button class="pbtn">Ajouter</button></form>`;
-  if(k==='settings')h+=`<h4>Réglages de la tontine</h4><p>Les changements s'appliquent dès le prochain tour.</p><form id="sf"><label class="fld">Nom<input id="sn" value="${S.nom.replace(/"/g,'&quot;')}"></label><label class="fld">Cotisation par tour (FCFA)<input id="sm" type="number" step="500" value="${S.montant}"></label><label class="fld">Pénalité de retard (FCFA)<input id="sp" type="number" step="500" value="${S.penalite}"></label><label class="fld">Fréquence<select id="sq">${['Hebdomadaire','Bimensuelle','Mensuelle'].map(f=>`<option ${f===S.freq?'selected':''}>${f}</option>`).join('')}</select></label><button class="pbtn">Enregistrer</button><button class="sbtn" type="button" id="reset">Réinitialiser la démonstration</button></form>`;
+  if(k==='settings')h+=`<h4>Réglages de la tontine</h4><p>Les changements s'appliquent dès le prochain tour.</p><form id="sf"><label class="fld">Nom<input id="sn" value="${S.nom.replace(/"/g,'&quot;')}"></label><label class="fld">Cotisation par tour (€)<input id="sm" type="number" step="5" value="${S.montant}"></label><label class="fld">Pénalité de retard (€)<input id="sp" type="number" step="1" value="${S.penalite}"></label><label class="fld">Fréquence<select id="sq">${['Hebdomadaire','Bimensuelle','Mensuelle'].map(f=>`<option ${f===S.freq?'selected':''}>${f}</option>`).join('')}</select></label><button class="pbtn">Enregistrer</button><button class="sbtn" type="button" id="reset">Réinitialiser la démonstration</button></form>`;
   if(k==='draw'){const rest=S.ordre.slice(S.tour+1);
     h+=`<h4>Tirage au sort</h4><p>Les ${rest.length} tours restants sont tirés au hasard, devant tout le monde. Le tour en cours ne change pas.</p><div class="slot"><div class="reel" id="reel"></div></div><div class="list" id="drawRes" style="display:none"></div><button class="pbtn" id="go">Lancer le tirage</button>`;
     box.innerHTML=h;$('#sheet').classList.add('on');
@@ -291,7 +291,7 @@ function openSheet(k){
     return}
   box.innerHTML=h;$('#sheet').classList.add('on');
   $('#af')&&($('#af').onsubmit=e=>{e.preventDefault();const nom=$('#an').value.trim();if(nom.length<3)return;const id=Math.max(...S.membres.map(m=>m.id))+1;S.membres.push({id,nom,tel:$('#at').value.replace(/\D/g,'').slice(-9)||'600000000',c:COLS[id%COLS.length]});S.ordre.push(id);save();closeSheet();R[cur]();toast(nom.split(' ')[0]+' a rejoint la tontine')});
-  $('#sf')&&($('#sf').onsubmit=e=>{e.preventDefault();S.nom=$('#sn').value.trim()||S.nom;S.montant=Math.max(500,+$('#sm').value);S.penalite=Math.max(0,+$('#sp').value);S.freq=$('#sq').value;save();closeSheet();R[cur]();toast('Réglages enregistrés')});
+  $('#sf')&&($('#sf').onsubmit=e=>{e.preventDefault();S.nom=$('#sn').value.trim()||S.nom;S.montant=Math.max(5,+$('#sm').value);S.penalite=Math.max(0,+$('#sp').value);S.freq=$('#sq').value;save();closeSheet();R[cur]();toast('Réglages enregistrés')});
   $('#reset')&&($('#reset').onclick=()=>{S=demo();save();closeSheet();show('home');toast('Démonstration réinitialisée')});
   box.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{closeSheet();},350)));
 }

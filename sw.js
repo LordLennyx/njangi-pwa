@@ -1,5 +1,5 @@
 // Njangi — service worker : l'application fonctionne entièrement hors ligne après la première visite.
-const CACHE = 'njangi-v1';
+const CACHE = 'njangi-v2';
 const COQUILLE = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', e => {
