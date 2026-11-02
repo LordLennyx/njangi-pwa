@@ -1,0 +1,20 @@
+{
+  "titre": "<em>Njangi</em>, application mobile",
+  "type": "Application mobile · PWA",
+  "sous_titre": "Gestion de tontine, installable, hors ligne",
+  "couleur": "#d4683a",
+  "graine": 7,
+  "voix": [[3.3, "Njangi, une application mobile pour gérer sa tontine,"], [10.0, "les cotisations en un geste, un rappel WhatsApp déjà rédigé,"], [17.5, "un tirage au sort transparent, et tout fonctionne, même hors ligne."]],
+  "etapes": [
+    {"t": "wait", "ms": 900},
+    {"t": "click", "sel": ".act[data-open=pay]", "pause": 700},
+    {"t": "click", "sel": "#sbox .tog", "pause": 1300},
+    {"t": "click", "sel": ".act[data-open=remind]", "pause": 1700},
+    {"t": "eval", "js": "closeSheet()", "pause": 400},
+    {"t": "click", "sel": "#tabs button[data-s=ord]", "pause": 500},
+    {"t": "click", "sel": ".draw", "pause": 500},
+    {"t": "click", "sel": "#go", "pause": 3300},
+    {"t": "click", "sel": "#go", "pause": 600},
+    {"t": "click", "sel": "#tabs button[data-s=his]", "pause": 1300}
+  ]
+}

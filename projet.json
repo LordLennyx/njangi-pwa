@@ -1,0 +1,17 @@
+{
+  "repo": "njangi-pwa",
+  "nom": "Njangi",
+  "type": "Application mobile · PWA",
+  "categorie": "Applications mobiles",
+  "resume": "Application mobile de gestion de tontine : cotisations, cagnotte, ordre de passage, tirage au sort animé, rappels WhatsApp, pénalités et historique. Installable et 100 % hors ligne.",
+  "fonctions": [
+    "Progressive Web App : manifeste, icônes, service worker, installation Android / iPhone / ordinateur",
+    "Fonctionne sans réseau, données conservées sur l'appareil",
+    "Cotisations par interrupteur, pénalité automatique après l'heure de la séance, anneau de progression",
+    "Tirage au sort des tours restants façon machine à sous, réordonnancement manuel",
+    "Message de rappel pré-rédigé, envoi direct par WhatsApp ou copie",
+    "Remise de la cagnotte animée, historique et statistiques de ponctualité"
+  ],
+  "stack": "HTML, CSS, JavaScript natif, Service Worker, Web App Manifest",
+  "extra": {"Typographies": "Unbounded, Onest", "Évolutions possibles": "synchronisation Firebase / Supabase, paiement Orange Money et MTN MoMo, version Flutter"}
+}
